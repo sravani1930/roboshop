@@ -29,3 +29,18 @@ else
 fi
 cp mongo.repo /etc/yum.repos.d &>> $LOGFILE
 validate $? "Copied mongodb repo"
+
+dnf install mongodb-org -y &>> $LOGFILE
+validate $? "INSTALLATION OF MONGODB"
+
+systemctl enable mongod &>> $LOGFILE
+validate $? "ENABLING MONGOD"
+
+systemctl start mongod &>> $LOGFILE
+validate $? "Mongod service start"
+
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> $LOGFILE
+validate $? "Updating Listen Address"
+
+systemctl restart mongod &>> $LOGFILE
+validate $? "Mongod service start"
