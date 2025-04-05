@@ -56,15 +56,15 @@ validate $? "npm install"
 cp /home/centos/roboshop/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
 validate $? "file copying "
 systemctl daemon-reload &>> $LOGFILE
-VALIDATE $? "catalogue daemon reload"
+validate $? "catalogue daemon reload"
 systemctl enable catalogue &>> $LOGFILE
-VALIDATE $? "Enable catalogue"
+validate $? "Enable catalogue"
 systemctl start catalogue &>> $LOGFILE
-VALIDATE $? "Starting catalogue"
+validate $? "Starting catalogue"
 cp /home/centos/roboshop/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
-VALIDATE $? "copying mongodb repo"
+validate $? "copying mongodb repo"
 dnf install mongodb-org-shell -y &>> $LOGFILE
-VALIDATE $? "Installing MongoDB client"
+validate $? "Installing MongoDB client"
 mongo --host $MONGDB_HOST </app/schema/catalogue.js &>> $LOGFILE
-VALIDATE $? "Loading catalouge data into MongoDB"
+validate $? "Loading catalouge data into MongoDB"
 mongo --host $MONGODB_HOST </app/schema/catalogue.js
