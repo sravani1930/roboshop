@@ -22,6 +22,7 @@ validate(){
 
 if [ $ID -ne 0 ]
 then
+
    echo -e "$R please switch to root user $N"
    exit 1
 else
