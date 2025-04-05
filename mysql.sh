@@ -5,10 +5,10 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+MONGDB_HOST=mongodb.daws76s.online
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-exec &>$LOGFILE
 
 echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
@@ -30,30 +30,26 @@ else
     echo "You are root user"
 fi # fi means reverse of if, indicating condition end
 
+dnf module disable mysql -y &>> $LOGFILE
 
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+VALIDATE $? "Disable current MySQL version"
 
-VALIDATE $? "Installing Remi release"
+cp mysql.repo /etc/yum.repos.d/mysql.repo &>> $LOGFILE
 
-dnf module enable redis:remi-6.2 -y
+VALIDATE $? "Copied MySQl repo"
 
-VALIDATE $? "enabling redis"
+dnf install mysql-community-server -y &>> $LOGFILE
 
-dnf install redis -y
+VALIDATE $? "Installing MySQL Server"
 
-VALIDATE $? "Installing Redis"
+systemctl enable mysqld &>> $LOGFILE 
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
+VALIDATE $? "Enabling MySQL Server"
 
-VALIDATE $? "allowing remote connections"
+systemctl start mysqld &>> $LOGFILE
 
-systemctl enable redis
+VALIDATE $? "Starting  MySQL Server" 
 
-VALIDATE $? "Enabled Redis"
+mysql_secure_installation --set-root-pass RoboShop@1 &>> $LOGFILE
 
-systemctl start redis
-
-VALIDATE $? "Started Redis"
-
-
-
+VALIDATE $? "Setting  MySQL root password"
