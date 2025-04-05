@@ -94,6 +94,6 @@ dnf install mongodb-org-shell -y &>> $LOGFILE
 
 VALIDATE $? "Installing MongoDB client"
 
-mongo --host ip-172-31-83-105.ec2.internal </app/schema/catalogue.js &>> $LOGFILE
+mongo --host 172.31.92.96 </app/schema/catalogue.js &>> $LOGFILE
 
 VALIDATE $? "Loading catalouge data into MongoDB"
