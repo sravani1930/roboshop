@@ -50,7 +50,6 @@ validate $? "Downloading file"
 cd /app &>> $LOGFILE
 unzip -o /tmp/catalogue.zip &>> $LOGFILE
 validate $? "Unzipping file"
-unzip /tmp/catalogue.zip &>> $LOGFILE
 cd /app &>> $LOGFILE
 npm install &>> $LOGFILE
 validate $? "npm install"
