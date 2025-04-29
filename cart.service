@@ -5,7 +5,7 @@ User=roboshop
 Environment=REDIS_HOST=redis.devopsify.space
 Environment=CATALOGUE_HOST=catalogue.devopsify.space
 Environment=CATALOGUE_PORT=8080
-ExecStart=/bin/node /app/server.js
+ExecStart=/usr/bin/node /app/server.js
 SyslogIdentifier=cart
 
 [Install]
